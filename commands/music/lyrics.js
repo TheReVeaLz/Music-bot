@@ -10,7 +10,7 @@ module.exports = {
     async execute({ inter }) {
         const player = useMainPlayer();
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const results = await player.lyrics
             .search({
@@ -18,11 +18,11 @@ module.exports = {
             })
             .catch(async (e) => {
                 console.log(e);
-                return inter.editReply({ content: await Translate(`Error! Please contact Developers! | <❌>`) });
+                return inter.reply({ content: await Translate(`Error! Please contact Developers! | <❌>`) });
             });
 
         const lyrics = results?.[0];
-        if (!lyrics?.plainLyrics) return inter.editReply({ content: await Translate(`No lyrics found for <${queue.currentTrack.title}>... try again ? <❌>`) });
+        if (!lyrics?.plainLyrics) return inter.reply({ content: await Translate(`No lyrics found for <${queue.currentTrack.title}>... try again ? <❌>`) });
 
         const trimmedLyrics = lyrics.plainLyrics.substring(0, 1997);
 
@@ -32,11 +32,11 @@ module.exports = {
                 name: lyrics.artistName
             })
             .setDescription(trimmedLyrics.length === 1997 ? `${trimmedLyrics}...` : trimmedLyrics)
-            .setFooter({ text: await Translate('Music comes first - Made with heart by the Community <❤️>'), iconURL: inter.member.avatarURL({ dynamic: true }) })
+            .setFooter({ iconURL: inter.member.avatarURL({ dynamic: true }) })
             .setTimestamp()
             .setColor('#2f3136');
 
-        return inter.editReply({ embeds: [embed] });
+        return inter.reply({ embeds: [embed] });
     }
 }
 

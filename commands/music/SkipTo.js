@@ -23,17 +23,17 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const track = inter.options.getString('song');
         const number = inter.options.getNumber('number')
-        if (!track && !number) return inter.editReply({ content: await Translate(`You have to use one of the options to jump to a song <${inter.member}>... try again ? <❌>`) });
+        if (!track && !number) return inter.reply({ content: await Translate(`You have to use one of the options to jump to a song <${inter.member}>... try again ? <❌>`) });
 
         let trackName;
 
         if (track) {
             const skipTo = queue.tracks.toArray().find((t) => t.title.toLowerCase() === track.toLowerCase() || t.url === track)
-            if (!skipTo) return inter.editReply({ content: await Translate(`Could not find <${track}> <${inter.member}>... try using the url or the full name of the song ? <❌>`) });
+            if (!skipTo) return inter.reply({ content: await Translate(`Could not find <${track}> <${inter.member}>... try using the url or the full name of the song ? <❌>`) });
 
             trackName = skipTo.title;
 
@@ -41,7 +41,7 @@ module.exports = {
         } else if (number) {
             const index = number - 1;
             const name = queue.tracks.toArray()[index].title;
-            if (!name) return inter.editReply({ content: await Translate(`This track does not seem to exist <${inter.member}>... try again ? <❌>`) });
+            if (!name) return inter.reply({ content: await Translate(`This track does not seem to exist <${inter.member}>... try again ? <❌>`) });
 
             trackName = name;
 
@@ -52,6 +52,6 @@ module.exports = {
             .setAuthor({ name: await Translate(`Skipped to <${trackName}> <✅>`) })
             .setColor('#2f3136')
 
-        inter.editReply({ embeds: [embed] });
+        inter.reply({ embeds: [embed] });
     }
 }

@@ -9,11 +9,11 @@ module.exports = (queue) => {
         });
     }
 
-    (async () => {
-        const embed = new EmbedBuilder()
-        .setAuthor({ name: await Translate(`Nobody is in the voice channel, leaving the voice channel!  <❌>`)})
-        .setColor('#2f3136');
+    // (async () => {
+    //     const embed = new EmbedBuilder()
+    //     .setAuthor({ name: await Translate(`Nobody is in the voice channel, leaving the voice channel!  <❌>`)})
+    //     .setColor('#2f3136');
 
-        queue.metadata.channel.send({ embeds: [embed] });
-    })()
+    //     queue.metadata.channel.send({ embeds: [embed] });
+    // })()
 }

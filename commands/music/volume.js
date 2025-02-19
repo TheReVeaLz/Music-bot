@@ -20,13 +20,13 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const vol = inter.options.getNumber('volume');
-        if (queue.node.volume === vol) return inter.editReply({ content: await Translate(`The new volume is already the current one <${inter.member}>... try again ? <❌>`) });
+        if (queue.node.volume === vol) return inter.reply({ content: await Translate(`The new volume is already the current one <${inter.member}>... try again ? <❌>`) });
 
         const success = queue.node.setVolume(vol);
 
-        return inter.editReply({ content: success ? await Translate(`The volume has been modified to <${vol}/${maxVol}%> <🔊>`) : `Something went wrong ${inter.member}... try again ? ❌` });
+        return inter.reply({ content: success ? await Translate(`The volume has been modified to <${vol}/${maxVol}%> <🔊>`) : `Something went wrong ${inter.member}... try again ? ❌` });
     }
 }

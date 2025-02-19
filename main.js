@@ -1,7 +1,10 @@
 require('dotenv').config()
 
 const { Player } = require('discord-player');
-const { Client, GatewayIntentBits } = require('discord.js');
+const { DefaultExtractors } = require('@discord-player/extractor')
+const { YoutubeiExtractor } = require('discord-player-youtubei');
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
+const cfg = require("./config");
 
 global.client = new Client({
     intents: [
@@ -12,12 +15,23 @@ global.client = new Client({
         GatewayIntentBits.MessageContent
     ],
     disableMentions: 'everyone',
+    presence: {
+        activities: [ 
+            {
+                name: cfg.app.playing,
+                type: ActivityType.Playing
+            }
+        ],
+        status: "dnd"
+    }
 });
 
-client.config = require('./config');
+client.config = cfg;
 
-const player = new Player(client, client.config.opt.discordPlayer);
-player.extractors.loadDefault();
+const player = new Player(client);
+// player.extractors.loadDefault();
+player.extractors.register(YoutubeiExtractor, cfg.opt.discordPlayerYoutubei);
+player.extractors.loadMulti([YoutubeiExtractor, ...DefaultExtractors]);
 
 console.clear()
 require('./loader');
@@ -31,4 +45,9 @@ client.login(client.config.app.token)
     else{
         console.error('❌ An error occurred while trying to login to the bot! ❌ \n', e)
     }
+});
+  
+process.on("SIGINT", async function () {
+    await client.destroy();
+    process.exit();
 });

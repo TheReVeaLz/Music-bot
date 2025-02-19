@@ -9,7 +9,7 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const embed = new EmbedBuilder()
             .setColor('#2f3136')
@@ -26,9 +26,9 @@ module.exports = {
 
         inter.member.send({ embeds: [embed] })
         .then(async () => {
-            return inter.editReply({ content: await Translate(`I have sent you the music in private messages <✅>`) });
+            return inter.reply({ content: await Translate(`I have sent you the music in private messages <✅>`) });
         }).catch(async () => {
-            return inter.editReply({ content: await Translate(`Unable to send you a private message... try again ? <❌>`) });
+            return inter.reply({ content: await Translate(`Unable to send you a private message... try again ? <❌>`) });
         });
     }
 }

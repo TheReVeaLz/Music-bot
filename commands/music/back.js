@@ -9,9 +9,9 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
-        if (!queue.history.previousTrack) return inter.editReply({ content: await Translate(`There was no music played before <${inter.member}>... try again ? <❌>`) });
+        if (!queue.history.previousTrack) return inter.reply({ content: await Translate(`There was no music played before <${inter.member}>... try again ? <❌>`) });
 
         await queue.history.back();
 
@@ -19,6 +19,6 @@ module.exports = {
             .setAuthor({ name: await Translate(`Playing the previous track <✅>`) })
             .setColor('#2f3136');
 
-        inter.editReply({ embeds: [backEmbed] });
+        inter.reply({ embeds: [backEmbed] });
     }
 }

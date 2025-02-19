@@ -18,7 +18,7 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const actualFilter = queue.filters.ffmpeg.getFiltersEnabled()[0];
         const selectedFilter = inter.options.getString('filter');
@@ -34,7 +34,7 @@ module.exports = {
             await Translate(`List of available filters:`);
         filters.forEach(f => msg += `- **${f}**`);
 
-        if (!filter) return inter.editReply({ content: msg });
+        if (!filter) return inter.reply({ content: msg });
 
         await queue.filters.ffmpeg.toggle(filter);
 
@@ -42,6 +42,6 @@ module.exports = {
             .setAuthor({ name: await Translate(`The filter <${filter}> is now <${queue.filters.ffmpeg.isEnabled(filter) ? 'enabled' : 'disabled'}> <✅\n> *Reminder: the longer the music is, the longer this will take.*`) })
             .setColor('#2f3136');
 
-        return inter.editReply({ embeds: [filterEmbed] });
+        return inter.reply({ embeds: [filterEmbed] });
     }
 }

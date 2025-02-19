@@ -9,7 +9,7 @@ module.exports = {
 
     async execute({ inter }) {
         const queue = useQueue(inter.guild);
-        if (!queue?.isPlaying()) return inter.editReply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
+        if (!queue?.isPlaying()) return inter.reply({ content: await Translate(`No music currently playing <${inter.member}>... try again ? <❌>`) });
 
         const success = queue.node.skip();
 
@@ -17,6 +17,6 @@ module.exports = {
             .setColor('#2f3136')
             .setAuthor({ name: success ? await Translate(`Current music <${queue.currentTrack.title}> skipped <✅>`) : await Translate(`Something went wrong <${inter.member}>... try again ? <❌>`) });
 
-        return inter.editReply({ embeds: [embed] });
+        return inter.reply({ embeds: [embed] });
     }
 }
