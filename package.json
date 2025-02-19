@@ -11,11 +11,11 @@
     "dependencies": {
         "@discord-player/extractor": "^7.1.0",
         "@discordjs/opus": "^0.10.0",
-        "@distube/ytdl-core": "^4.16.0",
+        "@distube/ytdl-core": "^4.16.4",
         "@evan/opus": "^1.0.3",
         "discord-player": "^7.1.0",
         "discord-player-youtubei": "github:retrouser955/discord-player-youtubei",
-        "discord.js": "^14.17.3",
+        "discord.js": "^14.18.0",
         "dotenv": "^16.4.7",
         "ffmpeg-static": "^5.2.0",
         "install": "^0.13.0",
